@@ -63,6 +63,10 @@ export default function HeroSection() {
               <span className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl gradient-text">For Your Kidneys</span>
             </motion.h1>
 
+            <motion.p {...fadeUp(0.25)} className="text-[#710908] text-sm sm:text-base font-semibold mb-3">
+              Dr. Pavan Kumar <span className="text-[#4a0605]/50 font-medium">— Senior Nephrologist</span>
+            </motion.p>
+
             <motion.p {...fadeUp(0.3)} className="text-[#4a0605]/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md">
               World-class nephrology with cutting-edge diagnostics and compassionate care. Trusted by 5,000+ patients across South India.
             </motion.p>
