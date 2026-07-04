@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --maroon: #710908;
+    --maroon-dark: #4a0605;
+    --maroon-deep: #2a0403;
+    --orange: #FB6603;
+    --orange-light: #FC9F5E;
+    --orange-pale: #FDD5B5;
+    --muted-rose: #A35E5D;
+    --peach: #DBAB9D;
+    --cream: #FFF8F4;
+    --warm-white: #FFFDFB;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'League Spartan', sans-serif;
+    background-color: var(--cream);
+    color: #1a0a0a;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgba(251, 102, 3, 0.2);
+    color: var(--maroon);
+  }
+}
+
+.font-display { font-family: 'Cinzel', serif; }
+
+/* ── Glass System ── */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 24px rgba(113, 9, 8, 0.06), 0 1px 0 rgba(255,255,255,0.8) inset;
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 40px rgba(113, 9, 8, 0.1), 0 1px 0 rgba(255,255,255,0.95) inset;
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 24px rgba(113, 9, 8, 0.08), 0 1px 0 rgba(255,255,255,1) inset;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 20px 60px rgba(113, 9, 8, 0.08), 0 4px 16px rgba(113, 9, 8, 0.04), 0 1px 0 rgba(255,255,255,0.9) inset;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 28px 80px rgba(113, 9, 8, 0.13), 0 8px 24px rgba(251, 102, 3, 0.08), 0 1px 0 rgba(255,255,255,0.9) inset;
+}
+
+/* ── Gradient Text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #710908 0%, #A35E5D 45%, #FB6603 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-light {
+  background: linear-gradient(135deg, #FC9F5E 0%, #FDD5B5 50%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Backgrounds ── */
+.bg-hero {
+  background:
+    radial-gradient(ellipse 70% 50% at 70% 30%, rgba(251,102,3,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 70% at 15% 85%, rgba(113,9,8,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 90%, rgba(219,171,157,0.08) 0%, transparent 60%),
+    var(--cream);
+}
+
+.bg-section-alt {
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 20%, rgba(251,102,3,0.06) 0%, transparent 60%),
+    var(--warm-white);
+}
+
+.bg-maroon-gradient {
+  background: linear-gradient(135deg, #2a0403 0%, #4a0605 35%, #710908 65%, #8b1110 100%);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #710908 0%, #a33b0a 50%, #FB6603 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 20px rgba(113,9,8,0.35), 0 1px 0 rgba(255,255,255,0.15) inset;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary:hover { box-shadow: 0 8px 32px rgba(113,9,8,0.45), 0 1px 0 rgba(255,255,255,0.15) inset; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(113,9,8,0.15);
+  color: #710908;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-ghost:hover { background: rgba(255,255,255,0.85); border-color: rgba(113,9,8,0.3); transform: translateY(-1px); }
+
+/* ── Section Label ── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FB6603;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, #FB6603, #FC9F5E);
+  border-radius: 2px;
+}
+
+/* ── Form Input ── */
+.form-input {
+  width: 100%;
+  background: rgba(255,255,255,0.65);
+  border: 1.5px solid rgba(255,255,255,0.8);
+  border-radius: 14px;
+  padding: 13px 16px;
+  font-size: 14px;
+  color: #1a0a0a;
+  transition: all 0.2s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(113,9,8,0.04);
+  font-family: 'League Spartan', sans-serif;
+}
+
+.form-input::placeholder { color: rgba(74,6,5,0.35); }
+.form-input:focus {
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(251,102,3,0.4);
+  box-shadow: 0 0 0 3px rgba(251,102,3,0.08), 0 2px 8px rgba(113,9,8,0.06);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #A35E5D, #DBAB9D); border-radius: 4px; }
+
+/* ── Animations ── */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
