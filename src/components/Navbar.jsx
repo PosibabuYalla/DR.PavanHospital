@@ -1,24 +1,33 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Phone, ChevronRight } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
 
+// Section links live on the Home page. `page: '/team'` links navigate to another route.
 const links = [
-  { label: 'Home', href: '#home' },
-  { label: 'Services', href: '#services' },
-  { label: 'About', href: '#about' },
-  { label: 'Doctor', href: '#doctor' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', section: 'home' },
+  { label: 'Services', section: 'services' },
+  { label: 'About', section: 'about' },
+  { label: 'Team', page: '/team' },
+  { label: 'Doctor', section: 'doctor' },
+  { label: 'Contact', section: 'contact' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('home')
+  const location = useLocation()
+  const onHome = location.pathname === '/'
+
+  // Build an href for a section: same-page hash on Home, else route back to Home + hash.
+  const sectionHref = (id) => (onHome ? `#${id}` : `/#${id}`)
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50)
-      const sections = links.map(l => l.href.slice(1))
+      if (!onHome) return
+      const sections = links.filter(l => l.section).map(l => l.section)
       for (const id of [...sections].reverse()) {
         const el = document.getElementById(id)
         if (el && window.scrollY >= el.offsetTop - 120) { setActive(id); break }
@@ -26,7 +35,7 @@ export default function Navbar() {
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [onHome])
 
   return (
     <>
@@ -37,25 +46,26 @@ export default function Navbar() {
         className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-5xl"
       >
         <div className={`glass-pill rounded-full px-5 py-2.5 flex items-center justify-between transition-all duration-500 ${scrolled ? 'shadow-xl' : ''}`}>
-          <a href="#home" className="relative flex items-center shrink-0 h-9 sm:h-10 w-36 sm:w-[126px]">
+          <Link to="/" className="relative flex items-center shrink-0 h-9 sm:h-10 w-36 sm:w-[126px]">
             <img src="/logos/logo.png" alt="Dr. Pavan's Kidney Care Clinic" className="absolute left-0 top-1/2 -translate-y-1/2 h-24 sm:h-[84px] w-auto object-contain" />
-          </a>
+          </Link>
 
           <ul className="hidden md:flex items-center gap-1">
-            {links.map(({ label, href }) => {
-              const id = href.slice(1)
-              const isActive = active === id
+            {links.map(({ label, section, page }) => {
+              const isActive = page ? location.pathname === page : (onHome && active === section)
+              const cls = `relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${isActive ? 'text-[#710908]' : 'text-[#4a0605]/60 hover:text-[#710908]'}`
+              const pill = isActive && (
+                <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full"
+                  style={{ background: 'rgba(113,9,8,0.07)' }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
+              )
               return (
                 <li key={label}>
-                  <a href={href}
-                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${isActive ? 'text-[#710908]' : 'text-[#4a0605]/60 hover:text-[#710908]'}`}>
-                    {isActive && (
-                      <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full"
-                        style={{ background: 'rgba(113,9,8,0.07)' }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
-                    )}
-                    <span className="relative z-10">{label}</span>
-                  </a>
+                  {page ? (
+                    <Link to={page} className={cls}>{pill}<span className="relative z-10">{label}</span></Link>
+                  ) : (
+                    <a href={sectionHref(section)} className={cls}>{pill}<span className="relative z-10">{label}</span></a>
+                  )}
                 </li>
               )
             })}
@@ -105,16 +115,26 @@ export default function Navbar() {
               </div>
 
               <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-                {links.map(({ label, href }, i) => (
-                  <motion.a key={label} href={href}
-                    initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.06 }}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-medium text-[#1a0a0a] hover:bg-[#710908]/06 transition-colors group">
-                    {label}
-                    <ChevronRight size={14} className="text-[#A35E5D] group-hover:translate-x-0.5 transition-transform" />
-                  </motion.a>
-                ))}
+                {links.map(({ label, section, page }, i) => {
+                  const cls = "flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-medium text-[#1a0a0a] hover:bg-[#710908]/06 transition-colors group"
+                  const inner = (
+                    <>
+                      {label}
+                      <ChevronRight size={14} className="text-[#A35E5D] group-hover:translate-x-0.5 transition-transform" />
+                    </>
+                  )
+                  return (
+                    <motion.div key={label}
+                      initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.06 }}>
+                      {page ? (
+                        <Link to={page} onClick={() => setOpen(false)} className={cls}>{inner}</Link>
+                      ) : (
+                        <a href={sectionHref(section)} onClick={() => setOpen(false)} className={cls}>{inner}</a>
+                      )}
+                    </motion.div>
+                  )
+                })}
               </nav>
 
               <div className="px-4 pb-8 pt-4 border-t border-[#710908]/08">

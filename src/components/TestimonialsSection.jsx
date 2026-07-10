@@ -4,24 +4,49 @@ import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react'
 
 const testimonials = [
   {
-    name: 'Rajesh Sharma',
-    condition: 'CKD Patient',
-    review: "Dr. Pavan's expertise and compassion gave me a new lease on life. My CKD has been managed brilliantly — I feel healthier than I have in years. The entire team is incredibly attentive and professional.",
+    name: 'Siva Krishna',
+    meta: 'Age 39 · Patient',
+    review: "Dr. Pavan explained my kidney condition in a way I could finally understand. His treatment plan brought my reports back on track and I feel far more confident about my health today.",
   },
   {
-    name: 'Priya Nair',
-    condition: 'AKI Recovery',
-    review: "When I was rushed in with acute kidney injury, the team acted swiftly and saved my kidneys. Dr. Pavan explained every step clearly and made sure I was comfortable throughout my recovery.",
+    name: 'Manoj',
+    meta: 'Age 26 · Patient',
+    review: "I was really worried when my tests came back abnormal at such a young age. Dr. Pavan reassured me, guided me step by step, and the care I received here has been outstanding.",
   },
   {
-    name: 'Venkatesh Reddy',
-    condition: 'Dialysis Patient',
-    review: "I have been on dialysis here for two years and the care is exceptional. The staff treat you like family. The facility is spotless and the sessions are always on time. Truly the best in Hyderabad.",
+    name: 'Srinivasa Rao',
+    meta: 'Age 57 · Patient',
+    review: "After years of struggling with kidney trouble, this clinic gave me proper direction. Dr. Pavan is patient, thorough, and genuinely cares. My health has improved a great deal under his care.",
   },
   {
-    name: 'Anitha Krishnan',
-    condition: 'Transplant Follow-Up',
-    review: "Post-transplant follow-up with Dr. Pavan has been seamless. He monitors every detail and is always reachable. My transplant is thriving and I owe that to this incredible clinic.",
+    name: 'Saleem',
+    meta: 'Age 64 · Patient',
+    review: "At my age I have seen many doctors, but Dr. Pavan stands out for his kindness and clarity. The staff are respectful and the treatment has made a real difference to my daily life.",
+  },
+  {
+    name: 'Ameer',
+    meta: 'Age 32 · Patient',
+    review: "From the very first visit I felt I was in safe hands. Dr. Pavan answered every question patiently and the follow-up care has been excellent. I highly recommend this clinic.",
+  },
+  {
+    name: 'Hemanth Veeranjaneya Kumar',
+    meta: 'Age 23 · Patient',
+    review: "Being young, I was scared about my diagnosis. Dr. Pavan and his team supported me throughout and gave me hope. The care here is professional yet very personal.",
+  },
+  {
+    name: 'Harika',
+    meta: 'Age 31 · Patient',
+    review: "The attention and compassion at Dr. Pavan's clinic is something I have not seen elsewhere. My condition is well managed now and I am truly grateful for the care I received.",
+  },
+  {
+    name: 'Raveena',
+    meta: 'Age 52 · Patient',
+    review: "Dr. Pavan treated me like family. He took time to understand my history and made a plan that actually worked. The clinic is clean, calm and very well run.",
+  },
+  {
+    name: 'Venkata Lavanya',
+    meta: 'Age 23 · Patient',
+    review: "Excellent doctor and a caring team. Dr. Pavan explained everything clearly and never rushed my appointments. I always leave the clinic feeling reassured and well looked after.",
   },
 ]
 
@@ -101,7 +126,7 @@ export default function TestimonialsSection() {
                   </div>
                   <div className="text-left">
                     <p className="font-bold" style={{ color: '#710908' }}>{t.name}</p>
-                    <p style={{ fontSize: 14, color: '#A35E5D' }}>{t.condition}</p>
+                    <p style={{ fontSize: 14, color: '#A35E5D' }}>{t.meta}</p>
                   </div>
                 </div>
               </motion.div>

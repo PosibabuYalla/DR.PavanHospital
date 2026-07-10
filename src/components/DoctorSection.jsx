@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const qualifications = ['MBBS', 'MD – General Medicine', 'DM – Nephrology']
 
@@ -134,6 +135,10 @@ export default function DoctorSection() {
                 </div>
               ))}
             </div>
+
+            <Link to="/team" className="btn-primary inline-flex mt-10">
+              Know More
+            </Link>
           </motion.div>
         </div>
       </div>

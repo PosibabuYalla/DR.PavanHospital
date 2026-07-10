@@ -55,7 +55,7 @@ export default function HeroSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FB6603] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FB6603]" />
               </span>
-              <span className="text-xs font-semibold text-[#710908] tracking-wide">Premium Nephrology Care · Est. 2009</span>
+              <span className="text-xs font-semibold text-[#710908] tracking-wide">Best Nephrologist in Vijayawada & Poranki · Est. 2009</span>
             </motion.div>
 
             <motion.h1 {...fadeUp(0.2)} className="font-display font-bold leading-[1.08] mb-5">
@@ -68,7 +68,7 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.p {...fadeUp(0.3)} className="text-[#4a0605]/60 text-base sm:text-lg leading-relaxed mb-8 max-w-md">
-              World-class nephrology with cutting-edge diagnostics and compassionate care. Trusted by 5,000+ patients across South India.
+              World-class nephrology with cutting-edge diagnostics and compassionate care in Vijayawada and Poranki, Andhra Pradesh. Trusted by 5,000+ patients across South India.
             </motion.p>
 
             <motion.div {...fadeUp(0.4)} className="flex flex-wrap gap-3 mb-10">

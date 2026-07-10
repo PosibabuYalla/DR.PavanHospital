@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Mail, MapPin, Clock, ArrowUp } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 
 const quickLinks = [
-  { label: 'Home',         href: '#home' },
-  { label: 'About',        href: '#about' },
-  { label: 'Specialities', href: '#services' },
-  { label: 'Doctor',       href: '#doctor' },
-  { label: 'Contact',      href: '#contact' },
+  { label: 'Home',         hash: '#home' },
+  { label: 'About',        hash: '#about' },
+  { label: 'Specialities', hash: '#services' },
+  { label: 'Team',         hash: '#doctor', page: '/team' },
+  { label: 'Doctor',       hash: '#doctor' },
+  { label: 'Contact',      hash: '#contact' },
 ]
 
 const services = [
@@ -42,6 +44,10 @@ function FooterLink({ href, children }) {
 
 export default function Footer() {
   const [showTop, setShowTop] = useState(false)
+  const location = useLocation()
+  const onHome = location.pathname === '/'
+  // On Home, hash links scroll in-page; on other routes, route back to Home + hash.
+  const sectionHref = (hash) => (onHome ? hash : `/${hash}`)
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400)
@@ -64,7 +70,7 @@ export default function Footer() {
                 <img src="/logos/logo.png" alt="Dr. Pavan's Kidney Care Clinic" className="h-28 w-auto object-contain brightness-0 invert" />
               </div>
               <p style={{ fontSize: 14, color: 'rgba(219,171,157,0.80)', lineHeight: 1.7 }}>
-                South India's trusted nephrology centre — delivering expert kidney care with compassion since 2009. NABH Accredited · ISO 9001:2015.
+                Vijayawada &amp; Poranki's trusted nephrology centre — delivering expert kidney care with compassion since 2009. NABH Accredited · ISO 9001:2015.
               </p>
             </div>
 
@@ -72,8 +78,8 @@ export default function Footer() {
             <div>
               <p className="font-bold text-white mb-5" style={{ fontSize: 14 }}>Quick Links</p>
               <ul className="space-y-3">
-                {quickLinks.map(({ label, href }) => (
-                  <li key={label}><FooterLink href={href}>{label}</FooterLink></li>
+                {quickLinks.map(({ label, hash, page }) => (
+                  <li key={label}><FooterLink href={page || sectionHref(hash)}>{label}</FooterLink></li>
                 ))}
               </ul>
             </div>
@@ -83,7 +89,7 @@ export default function Footer() {
               <p className="font-bold text-white mb-5" style={{ fontSize: 14 }}>Our Services</p>
               <ul className="space-y-3">
                 {services.map((s) => (
-                  <li key={s}><FooterLink href="#services">{s}</FooterLink></li>
+                  <li key={s}><FooterLink href={sectionHref('#services')}>{s}</FooterLink></li>
                 ))}
               </ul>
             </div>

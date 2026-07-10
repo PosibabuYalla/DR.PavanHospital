@@ -1,51 +1,80 @@
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { Clock, Users, Heart, Headphones } from 'lucide-react'
 
 const stats = [
-  { icon: Clock,       value: '15+',  label: 'Years Experience' },
-  { icon: Users,       value: '10K+', label: 'Patients Treated' },
-  { icon: Heart,       value: '95%',  label: 'Patient Satisfaction' },
-  { icon: Headphones,  value: '24/7', label: 'Emergency Support' },
+  { icon: Clock,      target: 15, suffix: '+',  label: 'Years Experience' },
+  { icon: Users,      target: 10, suffix: 'K+', label: 'Patients Treated' },
+  { icon: Heart,      target: 95, suffix: '%',  label: 'Patient Satisfaction' },
+  { icon: Headphones, display: '24/7',          label: 'Emergency Support' },
 ]
+
+function Counter({ target, suffix = '', duration = 1.4 }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!inView) return
+    let frame
+    let start = null
+    const step = (ts) => {
+      if (start === null) start = ts
+      const progress = Math.min((ts - start) / (duration * 1000), 1)
+      setCount(Math.floor(progress * target))
+      if (progress < 1) frame = requestAnimationFrame(step)
+      else setCount(target)
+    }
+    frame = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(frame)
+  }, [inView, target, duration])
+
+  return <span ref={ref}>{count}{suffix}</span>
+}
 
 export default function StatsSection() {
   return (
-    <section style={{ background: 'linear-gradient(135deg, #710908 0%, #A35E5D 55%, #FB6603 100%)' }}
-      className="relative overflow-hidden py-20">
+    <section className="relative py-10 sm:py-14 px-5 sm:px-6" style={{ background: '#FFFDFB' }}>
+      <div className="max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="relative overflow-hidden rounded-[28px] sm:rounded-full"
+          style={{
+            background: 'linear-gradient(135deg, #710908 0%, #A35E5D 55%, #FB6603 100%)',
+            boxShadow: '0 24px 60px rgba(113,9,8,0.25), 0 8px 24px rgba(251,102,3,0.15)',
+          }}
+        >
+          {/* Glass sheen */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.14) 0%, transparent 55%)' }} />
 
-      {/* Decorative blob */}
-      <motion.div
-        animate={{ scale: [1, 1.18, 1], opacity: [0.10, 0.18, 0.10] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -top-24 -right-24 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #FC9F5E 0%, transparent 70%)' }}
-      />
-
-      <div className="relative z-10 max-w-[1280px] mx-auto px-5 sm:px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
-          {stats.map(({ icon: Icon, value, label }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
-              className="flex flex-col items-center text-center gap-4"
-            >
-              {/* Icon badge */}
-              <div className="w-14 h-14 rounded-full flex items-center justify-center shrink-0"
-                style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.20)' }}>
-                <Icon size={24} className="text-white" />
-              </div>
-
-              <div>
-                <p className="font-display font-bold text-white leading-none"
-                  style={{ fontSize: 48 }}>{value}</p>
-                <p className="mt-2 font-medium" style={{ fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>{label}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+          <div className="relative z-10 flex flex-wrap sm:flex-nowrap items-center justify-between sm:divide-x sm:divide-white/15 px-6 sm:px-10 py-5 sm:py-6 gap-y-5">
+            {stats.map(({ icon: Icon, target, suffix, display, label }, i) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
+                className="flex items-center gap-3 w-1/2 sm:w-auto sm:flex-1 justify-center px-2 sm:px-4"
+              >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                  style={{ background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.22)' }}>
+                  <Icon size={17} className="text-white" />
+                </div>
+                <div className="text-left leading-none">
+                  <p className="font-display font-bold text-white" style={{ fontSize: 24 }}>
+                    {display ?? <Counter target={target} suffix={suffix} />}
+                  </p>
+                  <p className="mt-1" style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)' }}>{label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   )

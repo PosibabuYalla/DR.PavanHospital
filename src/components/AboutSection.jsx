@@ -139,7 +139,7 @@ export default function AboutSection() {
               <span className="gradient-text">Kidney Health</span>
             </h2>
             <p className="text-[#4a0605]/62 leading-relaxed mb-4 text-sm sm:text-base">
-              Founded in 2009, KidneyCare has been at the forefront of nephrology in South India. Our state-of-the-art facility combines advanced medical technology with a warm, patient-centered approach.
+              Founded in 2009, Dr. Pavan's Kidney Care Clinic has been at the forefront of nephrology in Vijayawada, Poranki and across Andhra Pradesh. Our state-of-the-art facility combines advanced medical technology with a warm, patient-centered approach.
             </p>
             <p className="text-[#4a0605]/62 leading-relaxed mb-8 text-sm sm:text-base">
               We believe every patient deserves personalized, compassionate care. Our multidisciplinary team works together to provide comprehensive kidney health solutions — from early detection to transplant support.
